@@ -25,7 +25,11 @@ class MyApp extends StatelessWidget {
 }
 
 /*
-Error BS_AddTask : Top border can't be occurred.
+Error WidgetItems/bottom_sheet_add_task.dart : Top border can't be occurred.
+Error WidgetItems/bottom_sheet_add_task.dart : I don't know how to resize the DatePicker's words (too small => big).
+Error lib/Models/task.dart : What is primary constructor ?
+Error lib/Database/firestore_utility.dart : How does this work without a class ?
+Error lib/Database/firestore_utility.dart : Why it's not FirebaseFirestore ???
 
 
 */
