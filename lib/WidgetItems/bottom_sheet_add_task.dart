@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:todos/Database/firestore_utility.dart';
 import 'package:todos/Models/task.dart';
+import 'package:todos/tools.dart';
 
 class BS_AddTask extends StatefulWidget {
   @override
@@ -46,11 +46,11 @@ class _BS_AddTaskState extends State<BS_AddTask> {
                   ),
                   maxLines: 1,
                   onChanged: (t) => title = t,
+                  textInputAction: TextInputAction.next,
                   validator: (value) {
                     if (value == null || value.isEmpty)
                       return 'Please enter your task title';
-                    else
-                      return null;
+                    return null;
                   },
                 ),
                 TextFormField(
@@ -64,11 +64,11 @@ class _BS_AddTaskState extends State<BS_AddTask> {
                   minLines: 1,
                   maxLines: 4,
                   onChanged: (t) => description = t,
+                  textInputAction: TextInputAction.done,
                   validator: (value) {
                     if (value == null || value.isEmpty)
                       return 'Please enter your task description';
-                    else
-                      return null;
+                    return null;
                   },
                 ),
               ],
@@ -91,31 +91,30 @@ class _BS_AddTaskState extends State<BS_AddTask> {
             child: ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pop(context);
-                  afterAdding = await addTaskToFirestore(Task(
+                  showLoading(context, 'Loading');
+                  await addTaskToFirestore(Task(
                           title: title,
                           description: description,
-                          dateTime: selectedDate.millisecondsSinceEpoch))
+                          dateTime: DateUtils.dateOnly(selectedDate)
+                              .millisecondsSinceEpoch))
                       .then((value) {
-                    print('Added successfully');
-                    return Fluttertoast.showToast(
-                        msg: 'Added successfully',
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.onSurface,
-                        textColor: Theme.of(context).colorScheme.surface,
-                        fontSize: 16.0);
+                    Navigator.pop(context); //close the loading dialog
+                    Navigator.pop(context); //close the bottom sheet
+                    showMessage(context, "Added Successfully", 'ok');
+                  }).catchError((error) {
+                    Navigator.pop(context); //close the loading dialog
+                    Navigator.pop(context); //close the bottom sheet
+                    showMessage(context, "Failed to add task: $error", 'ok');
+                    print("Failed to add task: $error");
                   });
-                  afterAdding.then((value) => print('Added successfully2'));
-                  afterAdding.catchError(
-                      (error) => print("Failed to add user: $error"));
                 }
                 /*afterAdding = await addTaskToFirestore(Task(
                       title: title,
                       description: description,
                       dateTime: selectedDate.millisecondsSinceEpoch));
                   afterAdding.then((value) => print('Added successfully222');
+                  afterAdding.catchError(
+                      (error) => print("Failed to add user: $error"));
                     */
               },
               child: Text('Add this'),

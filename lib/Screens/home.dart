@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todos/WidgetItems/bottom_sheet_add_task.dart';
 import 'package:todos/tabs/tab_list.dart';
 
+import '../WidgetItems/bottom_sheet_add_task.dart';
 import '../tabs/tab_settings.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
+  double myNotch = 8;
   List<Widget> tabs = [ListTab(), SettingsTab()];
 
   @override
@@ -27,12 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: tabs[currentIndex],
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
-        notchMargin: 8,
+        notchMargin: myNotch,
         elevation: 0,
         child: BottomNavigationBar(
           currentIndex: currentIndex,
           onTap: (i) {
             currentIndex = i;
+            (currentIndex == 0) ? myNotch = 8 : myNotch = 36;
             setState(() {});
           },
           elevation: 0,
@@ -46,19 +48,23 @@ class _HomeScreenState extends State<HomeScreen> {
           showUnselectedLabels: false,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
-        onPressed: () {
-          showAddTask();
-        },
-        shape: const StadiumBorder(
-            side: BorderSide(width: 4, color: Colors.white)),
-        elevation: 1.5,
+      floatingActionButton: Visibility(
+        visible: (currentIndex == 0) ? true : false,
+        child: FloatingActionButton(
+          child:
+              Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
+          onPressed: () {
+            showAddTask();
+          },
+          shape: const StadiumBorder(
+              side: BorderSide(width: 4, color: Colors.white)),
+          elevation: 1.5,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-  
+
   void showAddTask()
   {
     showModalBottomSheet(
@@ -67,5 +73,4 @@ class _HomeScreenState extends State<HomeScreen> {
           return BS_AddTask();
         });
   }
-  
 }
