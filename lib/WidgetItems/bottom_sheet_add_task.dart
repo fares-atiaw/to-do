@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:todos/Database/firestore_utility.dart';
 import 'package:todos/Models/task.dart';
@@ -88,14 +89,34 @@ class _BS_AddTaskState extends State<BS_AddTask> {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.5,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  afterAdding = addTaskToFirestore(Task(
+                  Navigator.pop(context);
+                  afterAdding = await addTaskToFirestore(Task(
+                          title: title,
+                          description: description,
+                          dateTime: selectedDate.millisecondsSinceEpoch))
+                      .then((value) {
+                    print('Added successfully');
+                    return Fluttertoast.showToast(
+                        msg: 'Added successfully',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.onSurface,
+                        textColor: Theme.of(context).colorScheme.surface,
+                        fontSize: 16.0);
+                  });
+                  afterAdding.then((value) => print('Added successfully2'));
+                  afterAdding.catchError(
+                      (error) => print("Failed to add user: $error"));
+                }
+                /*afterAdding = await addTaskToFirestore(Task(
                       title: title,
                       description: description,
                       dateTime: selectedDate.millisecondsSinceEpoch));
-                  //afterAdding.then((value) => value.)
-                }
+                  afterAdding.then((value) => print('Added successfully222');
+                    */
               },
               child: Text('Add this'),
             ),
