@@ -50,7 +50,7 @@ class _TaskItemState extends State<TaskItem> {
             children: [
               Container(
                 width: 4,
-                height: MediaQuery.of(context).size.height * 0.06,
+                height: MediaQuery.of(context).size.height * 0.075,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(20),
@@ -66,16 +66,22 @@ class _TaskItemState extends State<TaskItem> {
                         widget.title,
                         style: Theme.of(context).textTheme.headline2,
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.watch_later_outlined,
-                            size: 16,
+                          Container(
+                            child: Icon(
+                              Icons.wb_incandescent_outlined,
+                              size: 16,
+                            ),
                           ),
                           SizedBox(
                             width: 5,
                           ),
-                          Text(widget.date.toString(),
+                          Text(widget.description,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline3

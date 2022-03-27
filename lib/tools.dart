@@ -9,7 +9,9 @@ void showMessage(BuildContext context, String message, String actionText) {
           content: Text(message),
           actions: [
             TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 child: Text(actionText))
           ],
         );

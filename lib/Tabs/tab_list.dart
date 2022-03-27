@@ -5,7 +5,6 @@ import 'package:todos/Components/task_item.dart';
 
 import '../Database/firestore_utility.dart';
 import '../Models/task.dart';
-import '../WidgetItems/bottom_sheet_add_task.dart';
 
 class ListTab extends StatefulWidget {
   @override
@@ -14,6 +13,7 @@ class ListTab extends StatefulWidget {
 
 class _ListTabState extends State<ListTab> {
   var tasks;
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,13 @@ class _ListTabState extends State<ListTab> {
         children: [
           CalendarTimeline(
             showYears: true,
-            initialDate: DateTime.now(),
+            initialDate: selectedDate,
             firstDate: DateTime.now().subtract(Duration(days: 365)),
             lastDate: DateTime.now().add(Duration(days: 365)),
-            onDateSelected: (date) => print(date),
+            onDateSelected: (date) {
+              selectedDate = date!;
+              setState(() {});
+            },
             leftMargin: 10,
             monthColor: Theme.of(context).colorScheme.onSurface,
             dayColor: Theme.of(context).colorScheme.onSurface,
@@ -37,11 +40,16 @@ class _ListTabState extends State<ListTab> {
             //locale: 'en_ISO',
           ),
           FutureBuilder(
-            future: getTasksCollection().get(),
+            future: getTasksCollection()
+                .where('dateTime',
+                    isEqualTo:
+                        DateUtils.dateOnly(selectedDate).millisecondsSinceEpoch)
+                .get(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot<Task>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return Expanded(
+                    child: Center(child: CircularProgressIndicator()));
               } else if (snapshot.hasError) {
                 return Text(
                     "Something went wrong (${snapshot.error.toString()})");
@@ -73,11 +81,11 @@ class _ListTabState extends State<ListTab> {
     );
   }
 
-  void showAddTask() {
-    showModalBottomSheet(
-        context: context,
-        builder: (buildContext) {
-          return BS_AddTask();
-        });
-  }
+// void showAddTask() {
+//   showModalBottomSheet(
+//       context: context,
+//       builder: (buildContext) {
+//         return BS_AddTask();
+//       });
+// }
 }

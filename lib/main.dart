@@ -35,6 +35,8 @@ Error lib/WidgetItems/bottom_sheet_add_task.dart : Can I use circularLoading(and
 Error lib/WidgetItems/bottom_sheet_add_task.dart : afterAdding doesn't work ?
 Error lib/WidgetItems/bottom_sheet_add_task.dart : How did I know (error){} as it's written just *Function* ?
 Error lib/WidgetItems/bottom_sheet_add_task.dart : *LinearProgressIndicator()* doesn't work ?
+Error lib/Tabs/tab_list.dart : RecyclerView advantage ?
+
 
 
 

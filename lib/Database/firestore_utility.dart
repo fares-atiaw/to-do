@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:todos/Components/task_item.dart';
 
 import '../Models/task.dart';
 
@@ -27,26 +25,26 @@ Future addTaskToFirestore(Task task) {
 //   return getTasksCollection().get();
 // }
 
-Widget gettingData(List<Task>? tasks) {
-  return FutureBuilder(
-    future: getTasksCollection().get(),
-    builder:
-        (BuildContext context, AsyncSnapshot<QuerySnapshot<Task>> snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator();
-      } else if (snapshot.hasError) {
-        return Text("Something went wrong (${snapshot.error.toString()})");
-      } else if (snapshot.hasData &&
-          snapshot.connectionState == ConnectionState.none) {
-        return Text("This data does not exist");
-      }
-      tasks = snapshot.data?.docs.map((x) => x.data()).toList();
-      return Expanded(
-        child: ListView.builder(
-          itemBuilder: (context, index) => TaskItem(tasks![index]),
-          itemCount: tasks?.length,
-        ),
-      );
-    },
-  );
-}
+// Widget gettingData(List<Task>? tasks, DateTime day) {
+//   return FutureBuilder(
+//     future: getTasksCollection().where('dateTime', isEqualTo: day).get(),
+//     builder:
+//         (BuildContext context, AsyncSnapshot<QuerySnapshot<Task>> snapshot) {
+//       if (snapshot.connectionState == ConnectionState.waiting) {
+//         return CircularProgressIndicator();
+//       } else if (snapshot.hasError) {
+//         return Text("Something went wrong (${snapshot.error.toString()})");
+//       } else if (snapshot.hasData &&
+//           snapshot.connectionState == ConnectionState.none) {
+//         return Text("This data does not exist");
+//       }
+//       tasks = snapshot.data?.docs.map((x) => x.data()).toList();
+//       return Expanded(
+//         child: ListView.builder(
+//           itemBuilder: (context, index) => TaskItem(tasks![index]),
+//           itemCount: tasks?.length,
+//         ),
+//       );
+//     },
+//   );
+// }

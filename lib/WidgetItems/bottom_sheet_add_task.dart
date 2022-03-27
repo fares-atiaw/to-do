@@ -94,7 +94,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
                   showLoading(context, 'Loading');
                   await addTaskToFirestore(Task(
                           title: title,
-                          description: description,
+                          description: description?.trim(),
                           dateTime: DateUtils.dateOnly(selectedDate)
                               .millisecondsSinceEpoch))
                       .then((value) {
