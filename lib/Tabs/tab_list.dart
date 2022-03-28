@@ -51,19 +51,48 @@ class _ListTabState extends State<ListTab> {
                 return Expanded(
                     child: Center(child: CircularProgressIndicator()));
               } else if (snapshot.hasError) {
-                return Text(
-                    "Something went wrong (${snapshot.error.toString()})");
+                print('00000000000');
+                return Center(
+                    child: Column(
+                  children: [
+                    ImageIcon(
+                      AssetImage('assets/images/error.png'),
+                      size: MediaQuery.of(context).size.width * 0.4,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    Text("${snapshot.error.toString()}"),
+                    ElevatedButton(
+                        onPressed: () => setState(() {}),
+                        child: Text("Try again !"))
+                  ],
+                ));
               } else if (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.none) {
                 return Text("This data does not exist");
               }
+              print('1111111111');
               tasks = snapshot.data?.docs.map((x) => x.data()).toList();
-              return Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) => TaskItem(tasks![index]),
-                  itemCount: tasks.length,
-                ),
-              );
+              return (tasks ==
+                      null) ///////////////////////////////////////////////////////  .length ???? / ! .hasData
+                  ? Center(
+                      child: Column(
+                      children: [
+                        ImageIcon(
+                          AssetImage('assets/images/empty_data.webp'),
+                          /////////////////////////// why ?
+                          size: MediaQuery.of(context).size.width * 0.8,
+                          //color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                        Text("${snapshot.error.toString()}"),
+                      ],
+                    ))
+                  : Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) =>
+                            TaskItem(tasks![index]),
+                        itemCount: tasks.length,
+                      ),
+                    );
             },
           ),
         ],

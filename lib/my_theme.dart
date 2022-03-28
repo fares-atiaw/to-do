@@ -4,7 +4,7 @@ class MyTheme {
   static const c_blue = Color(0xff5D9CEC);
   static const c_green = Color(0xff61E757);
   static const c_red = Color(0xffEC4B4B);
-  static const c_lightGreen = Color(0xffceecc4);
+  static const c_lightGreen = Color(0xffdcf1d5);
   static const c_title = Color(0xff363636);
 
   /*static const c_gold = Color.fromRGBO(183, 147, 95, 1.0);
