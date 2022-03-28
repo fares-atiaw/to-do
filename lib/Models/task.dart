@@ -22,14 +22,22 @@ class Task {
     };
   }
 
-  Task.fromJson(Map<String, dynamic> jason)
-      : this(
-          id: jason['id'],
-          title: jason['title'],
-          description: jason['description'],
-          dateTime: jason['dateTime'],
-          isDone: jason['isDone'],
-        );
+  // Task.fromJson(Map<String, dynamic> jason)
+  //     : this(
+  //         id: jason['id'],
+  //         title: jason['title'],
+  //         description: jason['description'],
+  //         dateTime: jason['dateTime'],
+  //         isDone: jason['isDone'],
+  //       );
+
+  Task.fromJson(Map<String, dynamic> jason) {
+    id = jason['id'];
+    title = jason['title'];
+    description = jason['description'];
+    dateTime = jason['dateTime'];
+    isDone = jason['isDone'];
+  }
 }
 
 /// Task : {"id":"id","title":"title","description":"description","dateTime":"dateTime","isDone":"isDone"}

@@ -156,4 +156,29 @@ class _TaskItemState extends State<TaskItem> {
         .catchError((error) =>
             showMessage(context, "Failed to delete the task: $error", 'ok'));
   }
+
+  Future<void> updateTask(BuildContext c) async {
+    //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
+    await getTasksCollection()
+        .doc(widget.id)
+        .update({
+          "title": widget.title,
+          "description": widget.description,
+          "dateTime": widget.date,
+          "isDone": widget.isDone,
+        })
+        .then((value) => showMessage(context, "Task Deleted", 'ok'))
+        .catchError((error) =>
+            showMessage(context, "Failed to delete the task: $error", 'ok'));
+  }
+
+  Future<void> doneTask(BuildContext c) async {
+    //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
+    await getTasksCollection()
+        .doc(widget.id)
+        .delete()
+        .then((value) => showMessage(context, "Task Deleted", 'ok'))
+        .catchError((error) =>
+            showMessage(context, "Failed to delete the task: $error", 'ok'));
+  }
 }

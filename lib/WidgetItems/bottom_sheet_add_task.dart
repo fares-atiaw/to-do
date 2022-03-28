@@ -127,10 +127,11 @@ class _BS_AddTaskState extends State<BS_AddTask> {
 
   void getDate() async {
     selectedDate = (await showDatePicker(
-            context: context,
-            initialDate: selectedDate,
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(Duration(days: 365))) ??
+          context: context,
+          initialDate: selectedDate,
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(Duration(days: 365)),
+        ) ??
         DateTime.now());
     setState(() {});
   }
