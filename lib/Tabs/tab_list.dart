@@ -39,12 +39,12 @@ class _ListTabState extends State<ListTab> {
             //selectableDayPredicate: (date) => date.day != 23,
             //locale: 'en_ISO',
           ),
-          FutureBuilder(
-            future: getTasksCollection()
+          StreamBuilder(
+            stream: getTasksCollection()
                 .where('dateTime',
                     isEqualTo:
                         DateUtils.dateOnly(selectedDate).millisecondsSinceEpoch)
-                .get(),
+                .snapshots(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot<Task>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,3 +89,31 @@ class _ListTabState extends State<ListTab> {
 //       });
 // }
 }
+
+/*FutureBuilder(
+            future: getTasksCollection()
+                .where('dateTime',
+                    isEqualTo:
+                        DateUtils.dateOnly(selectedDate).millisecondsSinceEpoch)
+                .get(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot<Task>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Expanded(
+                    child: Center(child: CircularProgressIndicator()));
+              } else if (snapshot.hasError) {
+                return Text(
+                    "Something went wrong (${snapshot.error.toString()})");
+              } else if (snapshot.hasData &&
+                  snapshot.connectionState == ConnectionState.none) {
+                return Text("This data does not exist");
+              }
+              tasks = snapshot.data?.docs.map((x) => x.data()).toList();
+              return Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) => TaskItem(tasks![index]),
+                  itemCount: tasks.length,
+                ),
+              );
+            },
+          ),*/

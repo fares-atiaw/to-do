@@ -125,7 +125,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
     );
   }
 
-  getDate() async {
+  void getDate() async {
     selectedDate = (await showDatePicker(
             context: context,
             initialDate: selectedDate,
