@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Models/task.dart';
 
 CollectionReference<Task> getTasksCollection() {
-  // Why it's not FirebaseFirestore ???
   return FirebaseFirestore.instance.collection('tasks').withConverter<Task>(
       fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
       toFirestore: (task, _) => task.toJson());

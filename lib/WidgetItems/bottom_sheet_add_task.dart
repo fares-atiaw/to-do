@@ -75,15 +75,17 @@ class _BS_AddTaskState extends State<BS_AddTask> {
             ),
           ),
           SizedBox(height: 16),
-          Text('Task Date',
+          Text('Task Date ↴',
+              textAlign: TextAlign.start,
               style: Theme.of(context)
                   .textTheme
                   .headline3
-                  ?.copyWith(fontSize: 18)),
+                  ?.copyWith(fontSize: 18, fontWeight: FontWeight.normal)),
           SizedBox(height: 4),
           InkWell(
             onTap: getDate,
-            child: Text(DateFormat('d-MMM-yyyy').format(selectedDate)),
+            child: Text(DateFormat('d-MMM-yyyy').format(selectedDate),
+                style: Theme.of(context).textTheme.headline2),
           ),
           SizedBox(height: 8),
           SizedBox(

@@ -47,7 +47,9 @@ class _TaskItemState extends State<TaskItem> {
           ),
           child: InkWell(
             onTap: () {
-              showMessage(context, widget.description, "ok");
+              showMessage(context, widget.description, "ok", () {
+                Navigator.pop(context);
+              }); ///////////
             },
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,7 +151,7 @@ class _TaskItemState extends State<TaskItem> {
 
   Future<void> deleteTask(BuildContext c) async {
     //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
-    await getTasksCollection()
+    getTasksCollection()
         .doc(widget.id)
         .delete()
         .then((value) => showMessage(context, "Task Deleted", 'ok'))
@@ -159,7 +161,12 @@ class _TaskItemState extends State<TaskItem> {
 
   Future<void> updateTask(BuildContext c) async {
     //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
-    await getTasksCollection()
+    // showLoading(context, message)
+    // Future<int> intTest;
+    // int x=await intTest;
+    // intTest.then((value) {
+    // })
+    getTasksCollection()
         .doc(widget.id)
         .update({
           "title": widget.title,
@@ -174,7 +181,7 @@ class _TaskItemState extends State<TaskItem> {
 
   Future<void> doneTask(BuildContext c) async {
     //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
-    await getTasksCollection()
+    getTasksCollection()
         .doc(widget.id)
         .delete()
         .then((value) => showMessage(context, "Task Deleted", 'ok'))

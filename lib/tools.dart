@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-void showMessage(BuildContext context, String message, String actionText) {
+void showMessage(BuildContext context, String message, String actionText,
+    [VoidCallback? fun]) {
   showDialog(
       context: context,
       builder: (context) {
@@ -10,7 +11,8 @@ void showMessage(BuildContext context, String message, String actionText) {
           actions: [
             TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  fun!();
                 },
                 child: Text(actionText))
           ],

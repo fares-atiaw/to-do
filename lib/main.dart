@@ -26,20 +26,18 @@ class MyApp extends StatelessWidget {
 
 /*
 @Solved
-Error lib/Models/task.dart : What is primary constructor ?  @@ just a handy syntax and it's called primary constructor
-Error lib/WidgetItems/bottom_sheet_add_task.dart ::: I don't know how to resize the DatePicker's words (too small => big).  @@ try headline2
 
 @Big
 Error lib/WidgetItems/bottom_sheet_add_task.dart : The max line of the description doesn't work !
 Error lib/WidgetItems/bottom_sheet_add_task.dart ::: Top border can't be occurred.
 Error lib/WidgetItems/bottom_sheet_add_task.dart ::: how to set a floating action button on a notch from another screen.
+Error lib/Components/task_item.dart : The attributes in the *task_item*, Comparing with the session ?
 
 @Small
 Error lib/Database/firestore_utility.dart : How does this work without a class ?  @@ ok and search for static
-Error lib/Database/firestore_utility.dart : Why it's not FirebaseFirestore ???  @@ok
-Error lib/Components/task_item.dart : The attributes in the *task_item*, right or wrong (widget.title/description) ?  @@ ok
+
 Error lib/Components/task_item.dart : Is it needed await/sync ?
-Error lib/tools.dart : If I make the parameter have a function for onPressed, it will not work ? ifSolved => Delete(no or yes)
+Error lib/tools.dart : If I make the parameter have a function for onPressed, it will not work ? ifSolved => Delete(no or yes)    @@ سبحان الله
 Error lib/WidgetItems/bottom_sheet_add_task.dart : How did I know (error){} as it's written just *Function* ?
 
 

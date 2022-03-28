@@ -57,7 +57,7 @@ class MyTheme {
         fontSize: 15,
         fontWeight: FontWeight.bold,
       ),
-      headline4: TextStyle(
+      subtitle2: TextStyle(
         color: Color(0xff200E32),
         fontSize: 12,
       ),
