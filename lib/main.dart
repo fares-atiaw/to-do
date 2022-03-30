@@ -27,32 +27,33 @@ class MyApp extends StatelessWidget {
 /*
 @Solved
 
-@Big
-Error lib/WidgetItems/bottom_sheet_add_task.dart : The max line of the description doesn't work !
-Error lib/WidgetItems/bottom_sheet_add_task.dart ::: Top border can't be occurred.
-Error lib/WidgetItems/bottom_sheet_add_task.dart ::: how to set a floating action button on a notch from another screen.
+@ After finishing
+Error lib/Components/task_item.dart : dismissible => What type of key should I entered ?
 Error lib/Components/task_item.dart : The attributes in the *task_item*, Comparing with the session ?
+Error lib/WidgetItems/bottom_sheet_add_task.dart ::: Top border can't be occurred.
 
 @Small
-Error lib/Database/firestore_utility.dart : How does this work without a class ?  @@ ok and search for static
-
-Error lib/Components/task_item.dart : Is it needed await/sync ?
-Error lib/tools.dart : If I make the parameter have a function for onPressed, it will not work ? ifSolved => Delete(no or yes)    @@ سبحان الله
+Error lib/dialog_messages.dart : update  function ? @@ أظبطها
 Error lib/WidgetItems/bottom_sheet_add_task.dart : How did I know (error){} as it's written just *Function* ?
-
-
-Error lib/WidgetItems/bottom_sheet_add_task.dart : Can I use circularLoading(and make the user can't click on something during that time) instead of using the dialog(btw if I clicked a double click, it will add twice/triple/..) ?
-Error lib/WidgetItems/bottom_sheet_add_task.dart : afterAdding doesn't work ?
-
-Error lib/WidgetItems/bottom_sheet_add_task.dart : *LinearProgressIndicator()* doesn't work ?
+Error lib/WidgetItems/bottom_sheet_add_task.dart : The max line of the description doesn't work !
+Error lib/Components/task_item.dart : Is it needed *Future<void> .. async{}* or it is fine if I just *void .. {}* ?
+||
 Error lib/Tabs/tab_list.dart : .length is not working because of *var* and if I change it, it will cause an error ?
 Error lib/Tabs/tab_list.dart : why ? ?
 Error lib/Tabs/tab_list.dart : if / if else  cases?
-Error lib/Tabs/tab_list.dart : RecyclerView advantage ?
+||
+Error lib/WidgetItems/bottom_sheet_add_task.dart
+ : *LinearProgressIndicator()* doesn't work ?
+Error lib/WidgetItems/bottom_sheet_add_task.dart
+ : Can I use circularLoading(and make the user can't click on something during that time) instead of using the dialog
+ (btw if I clicked a double click, this will let the user have the ability to  add twice/triple/..) ?
 
-Error lib/Components/task_item.dart : The slideable shape is not like the design ?
+Error lib/WidgetItems/bottom_sheet_add_task.dart : afterAdding doesn't work ?
 
-Error lib/Components/task_item.dart : dismissible => What type of key should I entered ?
+
+
+
+
 
 
 

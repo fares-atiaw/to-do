@@ -17,19 +17,18 @@ class _ListTabState extends State<ListTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          CalendarTimeline(
-            showYears: true,
-            initialDate: selectedDate,
-            firstDate: DateTime.now().subtract(Duration(days: 365)),
-            lastDate: DateTime.now().add(Duration(days: 365)),
-            onDateSelected: (date) {
-              selectedDate = date!;
-              setState(() {});
-            },
-            leftMargin: 10,
+    return Column(
+      children: [
+        CalendarTimeline(
+          showYears: true,
+          initialDate: selectedDate,
+          firstDate: DateTime.now().subtract(Duration(days: 365)),
+          lastDate: DateTime.now().add(Duration(days: 365)),
+          onDateSelected: (date) {
+            selectedDate = date!;
+            setState(() {});
+          },
+          leftMargin: 10,
             monthColor: Theme.of(context).colorScheme.onSurface,
             dayColor: Theme.of(context).colorScheme.onSurface,
             activeDayColor: Theme.of(context).primaryColor,
@@ -48,65 +47,54 @@ class _ListTabState extends State<ListTab> {
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot<Task>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Expanded(
-                    child: Center(child: CircularProgressIndicator()));
-              } else if (snapshot.hasError) {
-                print('00000000000');
-                return Center(
+              return Expanded(
+                  child: Center(child: CircularProgressIndicator()));
+            } else if (snapshot.hasError) {
+              print('Error while fetching data ');
+              return Center(
+                  child: Column(
+                children: [
+                  ImageIcon(
+                    AssetImage('assets/images/error.png'),
+                    size: MediaQuery.of(context).size.width * 0.4,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  Text("${snapshot.error.toString()}"),
+                  ElevatedButton(
+                      onPressed: () => setState(() {}),
+                      child: Text("Try again !"))
+                ],
+              ));
+            } else if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.none) {
+              return Text("This data does not exist");
+            }
+            print('builder');
+            tasks = snapshot.data?.docs.map((x) => x.data()).toList();
+            print("StramBuilder Did not enter any condition, $tasks");
+            return (tasks ==
+                    null) ///////////////////////////////////////////////////////  .length ???? / ! .hasData
+                ? Center(
                     child: Column(
-                  children: [
-                    ImageIcon(
-                      AssetImage('assets/images/error.png'),
-                      size: MediaQuery.of(context).size.width * 0.4,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    Text("${snapshot.error.toString()}"),
-                    ElevatedButton(
-                        onPressed: () => setState(() {}),
-                        child: Text("Try again !"))
-                  ],
-                ));
-              } else if (snapshot.hasData &&
-                  snapshot.connectionState == ConnectionState.none) {
-                return Text("This data does not exist");
-              }
-              print('1111111111');
-              tasks = snapshot.data?.docs.map((x) => x.data()).toList();
-              return (tasks ==
-                      null) ///////////////////////////////////////////////////////  .length ???? / ! .hasData
-                  ? Center(
-                      child: Column(
-                      children: [
-                        ImageIcon(
-                          AssetImage('assets/images/empty_data.webp'),
-                          /////////////////////////// why ?
-                          size: MediaQuery.of(context).size.width * 0.8,
-                          //color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                        Text("${snapshot.error.toString()}"),
-                      ],
-                    ))
-                  : Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) =>
-                            TaskItem(tasks![index]),
-                        itemCount: tasks.length,
+                    children: [
+                      ImageIcon(
+                        AssetImage('assets/images/empty_data.webp'),
+                        /////////////////////////// why ?
+                        size: MediaQuery.of(context).size.width * 0.8,
+                        //color: Theme.of(context).colorScheme.onPrimary,
                       ),
-                    );
-            },
-          ),
-        ],
-      ),
-      /*floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
-        onPressed: () {
-          showAddTask();
-        },
-        shape: const StadiumBorder(
-            side: BorderSide(width: 4, color: Colors.white)),
-        elevation: 1.5,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,*/
+                      Text("${snapshot.error.toString()}"),
+                    ],
+                    ))
+                : Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) => TaskItem(tasks[index]),
+                      itemCount: tasks.length,
+                    ),
+                  );
+          },
+        ),
+      ],
     );
   }
 

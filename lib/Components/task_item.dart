@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todos/Quick_Tools/dialog_messages.dart';
 import 'package:todos/my_theme.dart';
-import 'package:todos/tools.dart';
 
 import '../Database/firestore_utility.dart';
 import '../Models/task.dart';
@@ -13,12 +13,23 @@ class TaskItem extends StatefulWidget {
   late int date;
   late bool isDone;
 
+  // late String? id;
+  // late String? title;
+  // late String? description;
+  // late int? date;
+  // late bool? isDone;
+
   TaskItem(Task task) {
-    this.id = task.id ?? "";
-    this.title = task.title!;
-    this.description = task.description!;
-    this.date = task.dateTime!;
-    this.isDone = task.isDone!;
+    this.id = task.id = "";
+    this.title = task.title ?? 'No title';
+    this.description = task.description ?? '_';
+    this.date = task.dateTime ?? 0;
+    this.isDone = task.isDone ?? false;
+    // this.id = task.id;
+    // this.title = task.title;
+    // this.description = task.description;
+    // this.date = task.dateTime;
+    // this.isDone = task.isDone;
   }
 
   TaskItem.name(this.id, this.title, this.description, this.date, this.isDone);
@@ -46,10 +57,16 @@ class _TaskItemState extends State<TaskItem> {
             border: Border.all(width: 1.5, color: color),
           ),
           child: InkWell(
-            onTap: () {
-              showMessage(context, widget.description, "ok", () {
-                Navigator.pop(context);
-              }); ///////////
+            onLongPress: () async {
+              print('clicked');
+              showUpdateTaskMessage(
+                  context: context,
+                  oldTask: Task(
+                      id: widget.id,
+                      title: widget.title,
+                      description: widget.description,
+                      dateTime: widget.date));
+              //setState(() {});
             },
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,42 +167,49 @@ class _TaskItemState extends State<TaskItem> {
   }
 
   Future<void> deleteTask(BuildContext c) async {
-    //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
-    getTasksCollection()
-        .doc(widget.id)
-        .delete()
-        .then((value) => showMessage(context, "Task Deleted", 'ok'))
-        .catchError((error) =>
-            showMessage(context, "Failed to delete the task: $error", 'ok'));
+    //هل علشان ماتعطلش الthread الحالي فتأخذ thread خاص تخلص فيه براحتها
+    //أنا عملتها ذيادة كدة  //setState هو المفروض أحط ؟
+    showLoading(context, 'Loading');
+    getTasksCollection().doc(widget.id).delete().then((value) {
+      Navigator.pop(context);
+      showMessage(context, "Task Deleted", 'ok');
+    }).catchError((error) {
+      Navigator.pop(context);
+      showMessage(context, "Failed to delete the task: $error", 'ok');
+    });
   }
 
   Future<void> updateTask(BuildContext c) async {
-    //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
+    //أنا عملتها ذيادة كدة  //setState هو المفروض أحط ؟
     // showLoading(context, message)
     // Future<int> intTest;
     // int x=await intTest;
     // intTest.then((value) {
     // })
-    getTasksCollection()
-        .doc(widget.id)
-        .update({
-          "title": widget.title,
-          "description": widget.description,
-          "dateTime": widget.date,
-          "isDone": widget.isDone,
-        })
-        .then((value) => showMessage(context, "Task Deleted", 'ok'))
-        .catchError((error) =>
-            showMessage(context, "Failed to delete the task: $error", 'ok'));
+    showLoading(context, 'Loading');
+    getTasksCollection().doc(widget.id).update({
+      "title": widget.title,
+      "description": widget.description,
+      "dateTime": widget.date,
+      "isDone": widget.isDone,
+    }).then((value) {
+      Navigator.pop(context);
+      showMessage(context, "Task updated", 'ok');
+    }).catchError((error) {
+      Navigator.pop(context);
+      showMessage(context, "Failed to update the task: $error", 'ok');
+    });
   }
 
   Future<void> doneTask(BuildContext c) async {
-    //أنا عملتها ذيادة كدة  //setState تتحط فين ؟
-    getTasksCollection()
-        .doc(widget.id)
-        .delete()
-        .then((value) => showMessage(context, "Task Deleted", 'ok'))
-        .catchError((error) =>
-            showMessage(context, "Failed to delete the task: $error", 'ok'));
+    //أنا عملتها ذيادة كدة  //setState هو المفروض أحط ؟
+    showLoading(context, 'Loading');
+    getTasksCollection().doc(widget.id).delete().then((value) {
+      Navigator.pop(context);
+      showMessage(context, "Task Deleted", 'ok');
+    }).catchError((error) {
+      Navigator.pop(context);
+      showMessage(context, "Failed to delete the task: $error", 'ok');
+    });
   }
 }
