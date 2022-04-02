@@ -69,9 +69,9 @@ class _ListTabState extends State<ListTab> {
                 snapshot.connectionState == ConnectionState.none) {
               return Text("This data does not exist");
             }
-            print('builder');
+            //print('builder');
             tasks = snapshot.data?.docs.map((x) => x.data()).toList();
-            print("StramBuilder Did not enter any condition, $tasks");
+            print("👍 StramBuilder Did not enter any condition, $tasks");
             return (tasks ==
                     null) ///////////////////////////////////////////////////////  .length ???? / ! .hasData
                 ? Center(

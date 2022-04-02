@@ -3,16 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Models/task.dart';
 
 CollectionReference<Task> getTasksCollection() {
+  // it opens another thread automatically so there is no need to write async when you use it
   return FirebaseFirestore.instance.collection('tasks').withConverter<Task>(
       fromFirestore: (snapshot, _) => Task.fromJson(snapshot.data()!),
       toFirestore: (task, _) => task.toJson());
 }
 
 Future addTaskToFirestore(Task task) {
-  var collection = getTasksCollection();
-  //collection.add(task);
+  var collection = getTasksCollection(); //collection.add(task);
   var document = collection
-      .doc(); //creating new document in the database with a generated id
+      .doc(); //or create new document in the database with a generated id (in case if "id" needed)
   task.id =
       document.id; //setting the generated id of the new document to the task
   return document.set(

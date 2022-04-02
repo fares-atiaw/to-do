@@ -70,7 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
         context: context,
         builder: (buildContext) {
-          return BS_AddTask();
+          return Container(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: BS_AddTask(),
+          );
         });
     setState(() {});
   }

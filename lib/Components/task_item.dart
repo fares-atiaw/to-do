@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todos/Quick_Tools/dialog_messages.dart';
 import 'package:todos/my_theme.dart';
 
@@ -20,7 +21,7 @@ class TaskItem extends StatefulWidget {
   // late bool? isDone;
 
   TaskItem(Task task) {
-    this.id = task.id = "";
+    this.id = task.id ?? "";
     this.title = task.title ?? 'No title';
     this.description = task.description ?? '_';
     this.date = task.dateTime ?? 0;
@@ -66,7 +67,7 @@ class _TaskItemState extends State<TaskItem> {
                       title: widget.title,
                       description: widget.description,
                       dateTime: widget.date));
-              //setState(() {});
+              //setState(() {}); // because of the StreamBuilder()
             },
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,6 +126,17 @@ class _TaskItemState extends State<TaskItem> {
                 InkWell(
                   onTap: () {
                     widget.isDone = (widget.isDone) ? false : true;
+                    if (widget.isDone) {
+                      Fluttertoast.showToast(
+                          msg: '${widget.title} 👍',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.onSurface,
+                          textColor: Theme.of(context).colorScheme.surface,
+                          fontSize: 16.0);
+                    }
+                    doneTask(context);
                     setState(() {});
                   },
                   child: Container(
@@ -166,10 +178,9 @@ class _TaskItemState extends State<TaskItem> {
     );
   }
 
-  Future<void> deleteTask(BuildContext c) async {
-    //هل علشان ماتعطلش الthread الحالي فتأخذ thread خاص تخلص فيه براحتها
-    //أنا عملتها ذيادة كدة  //setState هو المفروض أحط ؟
+  void deleteTask(BuildContext context) {
     showLoading(context, 'Loading');
+    print('id = ${widget.id}');
     getTasksCollection().doc(widget.id).delete().then((value) {
       Navigator.pop(context);
       showMessage(context, "Task Deleted", 'ok');
@@ -179,7 +190,7 @@ class _TaskItemState extends State<TaskItem> {
     });
   }
 
-  Future<void> updateTask(BuildContext c) async {
+  /*Future<void> updateTask(BuildContext c) async {
     //أنا عملتها ذيادة كدة  //setState هو المفروض أحط ؟
     // showLoading(context, message)
     // Future<int> intTest;
@@ -199,17 +210,17 @@ class _TaskItemState extends State<TaskItem> {
       Navigator.pop(context);
       showMessage(context, "Failed to update the task: $error", 'ok');
     });
-  }
+  }*/
 
-  Future<void> doneTask(BuildContext c) async {
-    //أنا عملتها ذيادة كدة  //setState هو المفروض أحط ؟
+  void doneTask(BuildContext context) {
     showLoading(context, 'Loading');
-    getTasksCollection().doc(widget.id).delete().then((value) {
+    getTasksCollection()
+        .doc(widget.id)
+        .update({'isDone': widget.isDone}).then((value) {
       Navigator.pop(context);
-      showMessage(context, "Task Deleted", 'ok');
     }).catchError((error) {
       Navigator.pop(context);
-      showMessage(context, "Failed to delete the task: $error", 'ok');
+      showMessage(context, "Failed save the task's status: $error", 'ok');
     });
   }
 }

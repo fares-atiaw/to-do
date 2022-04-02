@@ -23,7 +23,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
         /*decoration: BoxDecoration(
           color: Colors.white,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),*/
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(8), //MediaQuery.of(context).viewInsets.bottom
         child: Column(
           children: [
             Container(
@@ -38,6 +38,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
               child: Column(
                 children: [
                   TextFormField(
+                    autofocus: true,
                     decoration: InputDecoration(
                       labelStyle: Theme.of(context)
                           .textTheme
@@ -94,34 +95,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
               child: ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    showLoading(context, 'Loading');
-                    await addTaskToFirestore(Task(
-                            title: title,
-                            description: description?.trim(),
-                            dateTime: DateUtils.dateOnly(selectedDate)
-                                .millisecondsSinceEpoch))
-                        .then((value) {
-                      Navigator.pop(context); //close the loading dialog
-                      Navigator.pop(context); //close the bottom sheet
-                      showMessage(context, "Added Successfully", 'ok');
-                    }).catchError((error) {
-                      Navigator.pop(context); //close the loading dialog
-                      Navigator.pop(context); //close the bottom sheet
-                      showMessage(context, "Failed to add task: $error", 'ok');
-                      print("Failed to add task: $error");
-                    });
-                  }
-                  /*afterAdding = await addTaskToFirestore(Task(
-                        title: title,
-                        description: description,
-                        dateTime: selectedDate.millisecondsSinceEpoch));
-                    afterAdding.then((value) => print('Added successfully222');
-                    afterAdding.catchError(
-                        (error) => print("Failed to add user: $error"));
-                      */
-                },
+                onPressed: validate_and_AddTask,
                 child: Text('Add this'),
               ),
             )
@@ -131,11 +105,32 @@ class _BS_AddTaskState extends State<BS_AddTask> {
     );
   }
 
+  void validate_and_AddTask() {
+    if (_formKey.currentState!.validate()) {
+      showLoading(context, 'Loading');
+      addTaskToFirestore(Task(
+              title: title,
+              description: description?.trim(),
+              dateTime:
+                  DateUtils.dateOnly(selectedDate).millisecondsSinceEpoch))
+          .then((value) {
+        Navigator.pop(context); //close the loading dialog
+        Navigator.pop(context); //close the bottom sheet
+        showMessage(context, "Added Successfully", 'ok');
+      }).catchError((error) {
+        Navigator.pop(context); //close the loading dialog
+        Navigator.pop(context); //close the bottom sheet
+        showMessage(context, "Failed to add task: $error", 'ok');
+        print("Failed to add task: $error");
+      });
+    }
+  }
+
   void getDate() async {
     selectedDate = (await showDatePicker(
           context: context,
           initialDate: selectedDate,
-          firstDate: DateTime.now(),
+          firstDate: DateTime.now().subtract(Duration(days: 365)),
           lastDate: DateTime.now().add(Duration(days: 365)),
         ) ??
         DateTime.now());

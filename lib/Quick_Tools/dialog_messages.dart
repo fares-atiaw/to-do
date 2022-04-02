@@ -25,10 +25,11 @@ void showMessage(BuildContext context, String message, String actionText,
 
 void showLoading(BuildContext context, String message) {
   showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Color.fromRGBO(157, 158, 165, 0.4),
+          backgroundColor: Color.fromRGBO(157, 158, 165, 0.25098039215686274),
           content: Row(
             children: [
               Text(message),
@@ -46,9 +47,7 @@ void showLoading(BuildContext context, String message) {
 }
 
 void showUpdateTaskMessage(
-    {required BuildContext context, required Task oldTask})
-//You should get the old title, description and time(int => DateTime)
-{
+    {required BuildContext context, required Task oldTask}) {
   final _formKey = GlobalKey<FormState>(); //As a reference
   String? newTitle;
   String? newDescription;
@@ -164,22 +163,13 @@ void showUpdateTaskMessage(
               ],
             ),
           ));
-
-  //return Task(title: newTitle, description: newDescription, dateTime: newDate);
 }
 
 Future<void> updateTask(
     {required BuildContext context, required Task updatedTask}) async {
-  //أنا عملتها ذيادة كدة  //setState هو المفروض أحط ؟
-  // showLoading(context, message)
-  // Future<int> intTest;
-  // int x=await intTest;
-  // intTest.then((value) {
-  // })
-  print(
-      'updateTask -> date is ${DateTime.fromMillisecondsSinceEpoch(updatedTask.dateTime!).toString()}');
+  //print('updateTask -> date is ${DateTime.fromMillisecondsSinceEpoch(updatedTask.dateTime!).toString()}');
   showLoading(context, 'Loading');
-  print('updateTask -> updatedTask is description ${updatedTask.description}');
+  //print('updateTask -> updatedTask is description ${updatedTask.description}');
   getTasksCollection().doc(updatedTask.id).update({
     "title": updatedTask.title,
     "description": updatedTask.description,
@@ -194,86 +184,3 @@ Future<void> updateTask(
     showMessage(context, "Failed to update the task: $error", 'ok');
   });
 }
-
-// final _formKey = GlobalKey<FormState>(); //As a reference
-// void showUpdateDocument(BuildContext context, String message) {
-//   showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AlertDialog(
-//           backgroundColor: Theme.of(context).colorScheme.onPrimary,
-//           content: Text(message),
-//           actions: [
-//             TextButton(
-//                 onPressed: () {
-//                   Navigator.pop(context);
-//                 },
-//                 child: Column(
-//                   children: [
-//                     Container(
-//                         margin: EdgeInsets.all(10),
-//                         child: Text('Edit Task',
-//                             style: Theme.of(context)
-//                                 .textTheme
-//                                 .headline3
-//                                 ?.copyWith(fontSize: 26))),
-//                     Form(
-//                       key: _formKey,
-//                       child: Column(
-//                         children: [
-//                           TextFormField(
-//                             decoration: InputDecoration(
-//                               labelStyle: Theme.of(context)
-//                                   .textTheme
-//                                   .headline3
-//                                   ?.copyWith(fontSize: 20, fontWeight: FontWeight.normal),
-//                               labelText: 'Title',
-//                             ),
-//                             maxLines: 1,
-//                             onChanged: (t) => title = t,
-//                             textInputAction: TextInputAction.next,
-//                             validator: (value) {
-//                               if (value == null || value.isEmpty)
-//                                 return 'Please enter your task title';
-//                               return null;
-//                             },
-//                           ),
-//                           TextFormField(
-//                             decoration: InputDecoration(
-//                               labelStyle: Theme.of(context)
-//                                   .textTheme
-//                                   .headline3
-//                                   ?.copyWith(fontSize: 20, fontWeight: FontWeight.normal),
-//                               labelText: 'Description',
-//                             ),
-//                             minLines: 1,
-//                             maxLines: 4,
-//                             onChanged: (t) => description = t,
-//                             textInputAction: TextInputAction.done,
-//                             validator: (value) {
-//                               if (value == null || value.isEmpty)
-//                                 return 'Please enter your task description';
-//                               return null;
-//                             },
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                     SizedBox(height: 16),
-//                     Text('Task Date',
-//                         style: Theme.of(context)
-//                             .textTheme
-//                             .headline3
-//                             ?.copyWith(fontSize: 18)),
-//                     SizedBox(height: 4),
-//                     InkWell(
-//                       onTap: getDate,
-//                       child: Text(DateFormat('d-MMM-yyyy').format(selectedDate)),
-//                     ),
-//                     SizedBox(height: 8),
-//                   ],
-//                 ))
-//           ],
-//         );
-//       });
-// }
