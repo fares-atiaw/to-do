@@ -67,6 +67,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
                     ),
                     minLines: 1,
                     maxLines: 4,
+                    maxLength: 120,
                     onChanged: (t) => description = t,
                     textInputAction: TextInputAction.done,
                     validator: (value) {
