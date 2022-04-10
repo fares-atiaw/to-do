@@ -1,6 +1,6 @@
 # todos
 
-A new Flutter project.
+A Flutter project that represents the user's tasks for each day using Firebase Firestore. Each task has a title, description, date and status (Done/In-progress).
 
 ## Getting Started
 
