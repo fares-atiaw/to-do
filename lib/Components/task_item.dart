@@ -13,7 +13,6 @@ class TaskItem extends StatefulWidget {
   late String description;
   late int date;
   late bool isDone;
-
   // late String? id;
   // late String? title;
   // late String? description;
