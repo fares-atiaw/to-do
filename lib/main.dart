@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:todos/my_theme.dart';
 import 'package:todos/screens/home.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 

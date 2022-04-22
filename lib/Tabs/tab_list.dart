@@ -61,7 +61,9 @@ class _ListTabState extends State<ListTab> {
                   ),
                   Text("${snapshot.error.toString()}"),
                   ElevatedButton(
-                      onPressed: () => setState(() {}),
+                      onPressed: () => setState(() {
+                            print("${snapshot.error.toString()}");
+                          }),
                       child: Text("Try again !"))
                 ],
               ));

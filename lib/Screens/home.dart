@@ -54,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child:
               Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
           onPressed: () {
+            justPractice();
             showAddTask();
           },
           shape: const StadiumBorder(
@@ -77,5 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         });
     setState(() {});
+  }
+
+  Future justPractice() async {
+    await Future.delayed(Duration(seconds: 6));
+    print('justPractice \n justPractice');
   }
 }
