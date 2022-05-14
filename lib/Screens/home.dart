@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:todos/tabs/tab_list.dart';
 
 import '../WidgetItems/bottom_sheet_add_task.dart';
@@ -15,6 +16,18 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   double myNotch = 8;
   List<Widget> tabs = [ListTab(), SettingsTab()];
+
+  @override
+  void initState() {
+    super.initState();
+    initialization();
+  }
+
+  void initialization() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    print('go!');
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {

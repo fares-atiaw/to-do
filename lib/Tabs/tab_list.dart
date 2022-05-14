@@ -73,7 +73,8 @@ class _ListTabState extends State<ListTab> {
             }
             //print('builder');
             tasks = snapshot.data?.docs.map((x) => x.data()).toList();
-            print("👍 StramBuilder Did not enter any condition, $tasks");
+            print(
+                "👍 StreamBuilder Did not enter any error conditions, $tasks");
             return (tasks ==
                     null) ///////////////////////////////////////////////////////  .length ???? / ! .hasData
                 ? Center(
