@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todos/my_theme.dart';
 import 'package:todos/screens/home.dart';
 
+import 'Provider/app_provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,21 +16,41 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => AppProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
+  late AppProvider provider;
+  late SharedPreferences prefs;
+  late var modeType;
+
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of<AppProvider>(context);
+    init_SharedPreferences();
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
       },
       initialRoute: HomeScreen.routeName,
 
       theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
+      themeMode: provider.themeMode,
       //themeMode: Theme.,
     );
+  }
+
+  void init_SharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    modeType = prefs.getString('themeString') ?? 'light';
+    (modeType == 'light')
+        ? modeType = ThemeMode.light
+        : modeType = ThemeMode.dark;
+    provider.changeThemeMode(mode: modeType);
   }
 }
 

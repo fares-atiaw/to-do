@@ -29,15 +29,15 @@ class _ListTabState extends State<ListTab> {
             setState(() {});
           },
           leftMargin: 10,
-            monthColor: Theme.of(context).colorScheme.onSurface,
-            dayColor: Theme.of(context).colorScheme.onSurface,
-            activeDayColor: Theme.of(context).primaryColor,
-            activeBackgroundDayColor: Theme.of(context).colorScheme.onPrimary,
-            //Colors.redAccent[100]
-            dotsColor: Colors.transparent,
-            //selectableDayPredicate: (date) => date.day != 23,
-            //locale: 'en_ISO',
-          ),
+          monthColor: Theme.of(context).colorScheme.onSurface,
+          dayColor: Theme.of(context).colorScheme.onSurface,
+          activeDayColor: Theme.of(context).primaryColor,
+          activeBackgroundDayColor: Theme.of(context).colorScheme.onPrimary,
+          //Colors.redAccent[100]
+          dotsColor: Colors.brown[100],
+          //selectableDayPredicate: (date) => date.day != 23,
+          locale: 'en',
+        ),
           StreamBuilder(
             stream: getTasksCollection()
                 .where('dateTime',

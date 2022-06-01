@@ -38,7 +38,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
               child: Column(
                 children: [
                   TextFormField(
-                    autofocus: true,
+                    //autofocus: true,
                     decoration: InputDecoration(
                       labelStyle: Theme.of(context)
                           .textTheme
@@ -58,14 +58,15 @@ class _BS_AddTaskState extends State<BS_AddTask> {
                   ),
                   TextFormField(
                     decoration: InputDecoration(
-                      labelStyle: Theme.of(context)
+                      labelStyle: Theme
+                          .of(context)
                           .textTheme
                           .headline3
                           ?.copyWith(
-                              fontSize: 20, fontWeight: FontWeight.normal),
+                          fontSize: 20, fontWeight: FontWeight.normal),
                       labelText: 'Description',
                     ),
-                    minLines: 1,
+                    minLines: 2,
                     maxLines: 4,
                     maxLength: 120,
                     onChanged: (t) => description = t,

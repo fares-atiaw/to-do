@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void initialization() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 2000));
     print('go!');
     FlutterNativeSplash.remove();
   }
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'To Do App',
+          'To Do',
           style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: 20),
         ),
       ),
@@ -64,14 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Visibility(
         visible: (currentIndex == 0) ? true : false,
         child: FloatingActionButton(
-          child:
-              Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
+          child: Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
           onPressed: () {
-            justPractice();
+            //justPractice();
             showAddTask();
           },
-          shape: const StadiumBorder(
-              side: BorderSide(width: 4, color: Colors.white)),
+          shape: StadiumBorder(
+              side: BorderSide(
+                  width: 4, color: Theme.of(context).colorScheme.surface)),
           elevation: 1.5,
         ),
       ),

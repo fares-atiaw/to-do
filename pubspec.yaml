@@ -39,6 +39,8 @@ dependencies:
   firebase_core: ^1.13.1
   cloud_firestore: ^3.1.13
   flutter_native_splash: ^2.1.6
+  provider: ^6.0.3
+  shared_preferences: ^2.0.15
 
 #flutter clean
 #flutter pub get
@@ -47,10 +49,12 @@ flutter_native_splash:
   image: assets/backgrounds/3.0x/splash_icon@3x.png
   color: "#ffffff"
   color_dark: "#000000"
-#  background_image: "#fff"
-#  background_image_dark: "000000"
-#  android: true
-#  ios: true
+  #  background_image: "#000000"
+  #  background_image_dark: "000000"
+  android: true
+  ios: true
+#  android_gravity: fill
+#  ios_content_mode: scaleAspectFill
 
 dev_dependencies:
   flutter_test:

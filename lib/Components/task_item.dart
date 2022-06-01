@@ -45,7 +45,7 @@ class _TaskItemState extends State<TaskItem> {
         (widget.isDone) ? MyTheme.c_green : Theme.of(context).primaryColor;
 
     return Container(
-      margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 15),
       child: Slidable(
         //key: null,
         child: Container(
@@ -57,8 +57,7 @@ class _TaskItemState extends State<TaskItem> {
             border: Border.all(width: 1.5, color: color),
           ),
           child: InkWell(
-            onLongPress: () async {
-              print('clicked');
+            onTap: () async {
               showUpdateTaskMessage(
                   context: context,
                   oldTask: Task(
@@ -169,7 +168,7 @@ class _TaskItemState extends State<TaskItem> {
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'Delete',
+              label: null,
             ),
           ],
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:todos/Models/task.dart';
 
 import '../Database/firestore_utility.dart';
@@ -58,19 +57,22 @@ void showUpdateTaskMessage(
 
   showDialog(
       context: context,
-      builder: (context) => Container(
-            height: MediaQuery.of(context).size.height * 0.6, //nope
-            width: MediaQuery.of(context).size.width * 0.9, //nope
-            child: AlertDialog(
-              title: Container(
-                  margin:
-                      EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 20),
-                  child: Text('Update your Task',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3
-                          ?.copyWith(fontSize: 26))),
-              content: Column(
+      builder: (context) => AlertDialog(
+            elevation: 2,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            //backgroundColor: Theme.of(context).colorScheme.onPrimary,
+            title: Container(
+                margin:
+                    EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 20),
+                child: Text('Update your Task',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3
+                        ?.copyWith(fontSize: 26))),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Form(
                     key: _formKey,
@@ -120,48 +122,47 @@ void showUpdateTaskMessage(
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
-                  Text('Change date ↴',
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.headline3?.copyWith(
-                          fontSize: 18, fontWeight: FontWeight.normal)),
-                  SizedBox(height: 4),
-                  InkWell(
-                    onTap: () async {
-                      selectedDate = (await showDatePicker(
-                            context: context,
-                            initialDate: selectedDate,
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime.now().add(Duration(days: 365)),
-                          ) ??
-                          DateTime.now());
-                      newDate = DateUtils.dateOnly(selectedDate)
-                          .millisecondsSinceEpoch;
-                    },
-                    child: Text(DateFormat('d-MMM-yyyy').format(selectedDate),
-                        style: Theme.of(context).textTheme.headline2),
-                  ),
-                  SizedBox(height: 8),
+                  // SizedBox(height: 16),
+                  // Text('Change date ↴',
+                  //     textAlign: TextAlign.start,
+                  //     style: Theme.of(context).textTheme.headline3?.copyWith(
+                  //         fontSize: 18, fontWeight: FontWeight.normal)),
+                  // SizedBox(height: 4),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     selectedDate = (await showDatePicker(
+                  //           context: context,
+                  //           initialDate: selectedDate,
+                  //           firstDate: DateTime.now(),
+                  //           lastDate: DateTime.now().add(Duration(days: 365)),
+                  //         ) ??
+                  //         DateTime.now());
+                  //     newDate = DateUtils.dateOnly(selectedDate).millisecondsSinceEpoch;
+                  //   },
+                  //   child: Text(DateFormat('d-MMM-yyyy').format(selectedDate),
+                  //       style: Theme.of(context).textTheme.headline2),
+                  // ),
+                  //SizedBox(height: 8),
                 ],
               ),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('cancel')),
-                TextButton(
-                    onPressed: () async {
-                      updateTask(
-                          context: context,
-                          updatedTask: Task(
-                              id: oldTask.id,
-                              title: newTitle,
-                              description: newDescription,
-                              dateTime: newDate));
-                      Navigator.pop(context);
-                    },
-                    child: Text('update'))
-              ],
             ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('cancel')),
+              TextButton(
+                  onPressed: () async {
+                    updateTask(
+                        context: context,
+                        updatedTask: Task(
+                            id: oldTask.id,
+                            title: newTitle,
+                            description: newDescription,
+                            dateTime: newDate));
+                    Navigator.pop(context);
+                  },
+                  child: Text('update'))
+            ],
           ));
 }
 
