@@ -23,7 +23,8 @@ class _BS_AddTaskState extends State<BS_AddTask> {
         /*decoration: BoxDecoration(
           color: Colors.white,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),*/
-        padding: EdgeInsets.all(8), //MediaQuery.of(context).viewInsets.bottom
+        padding: EdgeInsets.all(8),
+        //left: 8, right: 8, bottom: MediaQuery.of(context).viewInsets.bottom
         child: Column(
           children: [
             Container(
@@ -36,6 +37,7 @@ class _BS_AddTaskState extends State<BS_AddTask> {
             Form(
               key: _formKey,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   TextFormField(
                     //autofocus: true,
